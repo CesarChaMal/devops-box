@@ -20,7 +20,7 @@ If you receive "The integer data is not valid as specified", try:
 
 bcdedit /set hypervisorlaunchtype auto
 
-#In Windows Features elimite windows Sandbox so you can use both vagrant and docker toguether
+#In Windows Features eliminate windows Sandbox so you can use both vagrant and docker toguether
 
 vagrant up
 vagrant ssh-config
@@ -234,3 +234,32 @@ config.vm.boot_timeout = 600
 3.- in the gui, log with the user "vagrant" (password = "vagrant")
 4.- in the gui, run sudo /etc/init.d/networking restart, in /etc/network/interfaces file, you must now have a section with #VAGRANT-BEGIN [...]#VAGRANT-END
 5.- run vagrant reload on the physical machine
+
+
+unset SSH_AUTH_SOCK
+unset SSH_AGENT_PID
+
+
+
+config.vm.boot_timeout = 600
+vagrant reload --provision
+vagrant ssh-config
+
+ssh -i "C:\Program Files (x86)\Vagrant\bin\insecure_private_keys\vagrant.key.rsa" -p 2222 vagrant@127.0.0.1
+
+vagrant ssh --debug
+
+vagrant ssh-config
+ssh-keygen -R [127.0.0.1]:2222
+vagrant ssh
+
+
+ssh -vvv -i "C:\Program Files (x86)\Vagrant\bin\insecure_private_keys\vagrant.key.rsa" -p 2222 vagrant@127.0.0.1
+ssh -vvv -i "C:\Program Files (x86)\Vagrant\bin\insecure_private_keys\vagrant.key.ed25519" -p 2222 vagrant@127.0.0.1
+vagrant ssh-config
+
+vagrant destroy -f
+vagrant box remove ubuntu/bionic64
+vagrant box add ubuntu/bionic64
+vagrant up
+
